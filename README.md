@@ -175,3 +175,7 @@ Todo agregado persistente terá um repositorio. De um modo geral existe uma rela
 Repare que não é uma entidade para um repositorio. Mas sim um **agregado** para um **repositório**. Por exemplo, as entidades **Order** e **OrderItem** pertencem ao agregado **Order** e haverá um repositorio **OrderRepository** para estas entidades.
 
 O domíno não precisa saber o que tem na implementação do repositório porque devem ser desacoplados. Mas ele terá controle sobre ele e poderá alterar o repositório.
+
+Como exemplo foi criado uma interface comum a todos os repositorios de cada agregação chamado **RepositoryInterface** em  *@shared/repository/repository-interface.ts*. 
+
+Também foi criado um adaptador em *infrastructure* para configurar o repositório com models onde cada model vai falar com uma tabela do banco de dados. Para consumir estes models foi utilizado o **sequelize**.
