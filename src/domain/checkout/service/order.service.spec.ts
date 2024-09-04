@@ -3,14 +3,14 @@ import Order from "../entity/order";
 import OrderItem from "../entity/order_item";
 import OrderService from "./order.service";
 describe("Order service unit tets", () => {
-  it("should place an order", () => {
+  it("should place an order and add reward points", () => {
     const customer = new Customer("c1", "Customer 1");
-    const item1 = new OrderItem("i1", "Item 1", 10, "p1", 1);
+    const item1 = new OrderItem("i1", "Item 1", 10, "p1", 2);
 
     const order = OrderService.placeOrder(customer, [item1]);
 
-    expect(customer.rewardPoints).toBe(5);
-    expect(order.totalEntity()).toBe(10);
+    expect(customer.rewardPoints).toBe(10);
+    expect(order.totalEntity()).toBe(20);
   });
 
   it("should get total of all orders", () => {

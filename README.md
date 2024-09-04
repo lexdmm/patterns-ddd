@@ -144,3 +144,23 @@ Dentro da classe **Order** existe o **totalEntity()** que calcula o valor total,
 Então temos 2 métodos que diferentes. O total da Order que vem da entidade e outro que trata de um dos comportamentos dela atraves da uma operação do *servico de domínio*.
 
 ### 3° Exemplo
+Este exemplo vai demonstrar como utilizar **domain service ** para trabalhar com agregados diferentes. Imagine que na Order, quando um cliente contratar um serviço ele ganhe *rewards* sobre essa ordem. 
+Basicamente depende tanto da agregação de **Order** quando de **Customer**.
+
+Para isso deve existir no **order.service.ts**. Um método chamado **placeOrder()** que recebe pontos rewards que correspondem a metade do valor total da ordem. 
+Também foi criado na entidade **Customer** um método chamado **addRewardPoints()** que adiciona estes pontos, repare que ele somente adiciona o saldo. Há também o metodo *get* **rewardPoints()** que retorna os rewards.
+
+Para operar na agregação de **Customer** a partir da **Order**, basta executar o método **placeOrder()** e capturar o retorno de **rewardPoints()**. Este exemplo se encontra no spec **order.service.spec.ts** 
+
+```
+it("should place an order and add reward points", () => {
+    const customer = new Customer("c1", "Customer 1");
+    const item1 = new OrderItem("i1", "Item 1", 10, "p1", 2);
+
+    const order = OrderService.placeOrder(customer, [item1]);
+
+    expect(customer.rewardPoints).toBe(10);
+    expect(order.totalEntity()).toBe(20);
+  });
+```
+Assim fica possível o agregado da ordem (Order) inferir nas re a regra de negocio dos reward points de cliente (Customer).
