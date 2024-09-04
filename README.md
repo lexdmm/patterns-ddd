@@ -1,4 +1,4 @@
-# Modelagem tática e Patterns
+# DDD - Modelagem tática e Patterns
 
 ## Tópicos
 - Lidando com as Entidades
@@ -14,6 +14,8 @@
   - 1° Exemplo
   - 2° Exemplo
   - 3° Exemplo
+
+- Repositories
 
 
 ## Lidando com as Entidades
@@ -164,3 +166,12 @@ it("should place an order and add reward points", () => {
   });
 ```
 Assim fica possível o agregado da ordem (Order) inferir nas re a regra de negocio dos reward points de cliente (Customer).
+
+## Repositories
+Se refere a um local de armazenamento para segurança e presenvação dos items para recupera-los posteriormente. E se espera que eles se encontrem no mesmo estado que estavam quando foram inseridos lá. Com a opção de poder remover ou não os items do repositório.
+
+Todo agregado persistente terá um repositorio. De um modo geral existe uma relação um-para-um entre o agregado e o repositório.
+
+Repare que não é uma entidade para um repositorio. Mas sim um **agregado** para um **repositório**. Por exemplo, as entidades **Order** e **OrderItem** pertencem ao agregado **Order** e haverá um repositorio **OrderRepository** para estas entidades.
+
+O domíno não precisa saber o que tem na implementação do repositório porque devem ser desacoplados. Mas ele terá controle sobre ele e poderá alterar o repositório.

@@ -1,4 +1,4 @@
-import Order from "../../../../domain/checkout/entity/order";
+import Order from "../../../../domain/order/entity/order";
 import OrderItemModel from "./order-item.model";
 import OrderModel from "./order.model";
 
