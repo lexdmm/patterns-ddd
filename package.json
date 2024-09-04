@@ -10,7 +10,7 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
-    "test": "npm run tsc -- --noEmit && jest",
+    "test": "yarn run tsc -- --noEmit && jest",
     "tsc": "tsc"
   },
   "dependencies": {

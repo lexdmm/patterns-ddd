@@ -9,11 +9,11 @@ export default class OrderService {
       throw new Error("Order must have at least one item");
     }
     const order = new Order(uuid(), customer.id, items);
-    customer.addRewardPoints(order.total() / 2);
+    customer.addRewardPoints(order.totalEntity() / 2);
     return order;
   }
 
-  static total(orders: Order[]): number {
-    return orders.reduce((acc, order) => acc + order.total(), 0);
+  static totalOperation(orders: Order[]): number {
+    return orders.reduce((acc, order) => acc + order.totalEntity(), 0);
   }
 }

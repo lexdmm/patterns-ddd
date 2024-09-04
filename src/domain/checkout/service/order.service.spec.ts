@@ -10,7 +10,7 @@ describe("Order service unit tets", () => {
     const order = OrderService.placeOrder(customer, [item1]);
 
     expect(customer.rewardPoints).toBe(5);
-    expect(order.total()).toBe(10);
+    expect(order.totalEntity()).toBe(10);
   });
 
   it("should get total of all orders", () => {
@@ -20,7 +20,7 @@ describe("Order service unit tets", () => {
     const order = new Order("o1", "c1", [item1]);
     const order2 = new Order("o2", "c1", [item2]);
 
-    const total = OrderService.total([order, order2]);
+    const total = OrderService.totalOperation([order, order2]);
 
     expect(total).toBe(500);
   });
