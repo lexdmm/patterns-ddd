@@ -72,22 +72,27 @@ export default class Customer {
 
 Eventualmente uma entidade está relacionada com um objeto de valor (Customer e Address). Essa cadeia define como cada parte vai conversar. Isso se chama *aggregation*.
 
-Neste fluxo abaixo: Vemos que uma **Order** não pode existir sem **Item**, isso significa que os items são um conjunto de uma ordem de serviço. Da mesma forma que a ordem só vai existir se houver um **Customer**. Então existe uma relação entre essas duas entidades. 
+Neste fluxo abaixo: Vemos que uma **Order** não pode existir sem **Order**, isso significa que os items são um conjunto de uma ordem de serviço. Da mesma forma que a ordem só vai existir se houver um **Customer**. Então existe uma relação entre essas duas entidades. 
 
 Isso mostra que o **Customer** é independente de **Order** e pode existir sem ele. Por isso **Customer** não tem forte relação com **Order**, por isso o ***customerID*** fica em **Order** .
 
+Já o **OrderItem** não faz parte da agregação do produto, mas da mesma forma **Product** também não tem forte relação com ele, por isso o ***productID*** fica em **OrderItem**.
+
 ```mermaid
-graph LR
+graph RL
   subgraph ide1 [Customer Aggregate]
   Customer<-->Address
   end
   subgraph ide2 [Customer Aggregate]
-  Order<-->Item
+  Order<-->OrderItem
+  end
+  subgraph ide3 [Product Aggregate]
+  OrderItem-.->Product
   end
   Order-.->Customer
 ```
 
-Isso significa que os meus **roots** com seus objetos de valor são **Customer** e **Order**, sendo estas as relações de agregração existentes.
+Isso significa que os meus **roots** com seus objetos de valor são **Customer**, **Order** e **Product**, sendo estas as relações de agregração existentes.
 
 Assim fica demonstrado que se a relação for **dentro da mesmo agregado** então a realação será pelo mesmo objeto ou classe. 
-E A **relação for de agregados diferentes**, você vai ter que definir um **id** para a relação.
+E a **relação for de agregados diferentes**, você vai ter que definir um **id** para a relação.
