@@ -1,5 +1,8 @@
 import OrderItem from "./order_item";
 export default class Order {
+  addItem(orderItem2: OrderItem) {
+    throw new Error('Method not implemented.');
+  }
   private _id: string;
   private _customerId: string;
   private _items: OrderItem[];
@@ -41,6 +44,14 @@ export default class Order {
     }
 
     return true;
+  }
+
+  updateCustomer(customerId: string) {
+    this._customerId = customerId;
+  }
+
+  addOrderItem(item: OrderItem) {
+      this._items.push(item);
   }
 
   totalEntity(): number {

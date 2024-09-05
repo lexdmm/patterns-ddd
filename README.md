@@ -146,7 +146,7 @@ Dentro da classe **Order** existe o **totalEntity()** que calcula o valor total,
 Então temos 2 métodos que diferentes. O total da Order que vem da entidade e outro que trata de um dos comportamentos dela atraves da uma operação do *servico de domínio*.
 
 ### 3° Exemplo
-Este exemplo vai demonstrar como utilizar **domain service ** para trabalhar com agregados diferentes. Imagine que na Order, quando um cliente contratar um serviço ele ganhe *rewards* sobre essa ordem. 
+Este exemplo vai demonstrar como utilizar **domain service** para trabalhar com agregados diferentes. Imagine que na Order, quando um cliente contratar um serviço ele ganhe *rewards* sobre essa ordem. 
 Basicamente depende tanto da agregação de **Order** quando de **Customer**.
 
 Para isso deve existir no **order.service.ts**. Um método chamado **placeOrder()** que recebe pontos rewards que correspondem a metade do valor total da ordem. 
@@ -178,4 +178,23 @@ O domíno não precisa saber o que tem na implementação do repositório porque
 
 Como exemplo foi criado uma interface comum a todos os repositorios de cada agregação chamado **RepositoryInterface** em  *@shared/repository/repository-interface.ts*. 
 
-Também foi criado um adaptador em *infrastructure* para configurar o repositório com models onde cada model vai falar com uma tabela do banco de dados. Para consumir estes models foi utilizado o **sequelize**.
+Também foi criado um adaptador em *infrastructure* para configurar o repositório com models onde cada model vai falar com uma tabela do banco de dados. Para consumir estes models foi utilizado o **sequelize** com banco de dados **sqlite**.
+
+Para exemplo, basta rodar os specs nos repositórios de cada agragação (order, product, customer). Onde cada repositório possui a mesma tratativa em memória apenas para os exemplos nos specs.
+
+```	
+describe("...", () => {  
+
+  ...
+
+  sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: ":memory:", //in-memory
+    logging: false,
+    sync: { force: true },
+  });
+
+  ...
+
+})
+```
