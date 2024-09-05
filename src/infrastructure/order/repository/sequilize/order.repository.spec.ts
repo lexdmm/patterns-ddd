@@ -174,11 +174,11 @@ describe("Order repository test", () => {
     order.updateCustomer(inexistentCustomerId);
 
     await expect(async ()=> {
-        await orderRepository.update(order);
+      await orderRepository.update(order);
     }).rejects.toThrow("Error updating order");
 
     const orderModel = await OrderModel.findOne({
-        where: { id: order.id },
+      where: { id: order.id },
     })
 
     expect(orderModel.customer_id).toBe(customer.id);
@@ -197,38 +197,37 @@ describe("Order repository test", () => {
     await productRepository.create(product);
 
     const orderItem = new OrderItem("1", product.name, product.price, product.id, 2);
-    
-    
+   
     const order = new Order("1", customer.id, [orderItem]);
     const orderRepository = new OrderRepository();
     await orderRepository.create(order);
 
     const orderModel = await OrderModel.findOne({
-        where: { id: order.id },
-        include: ["items"]
+      where: { id: order.id },
+      include: ["items"]
     })
 
     const orderFound = await orderRepository.find(order.id);
 
     expect(orderModel.toJSON()).toStrictEqual({
-        id: orderFound.id,
-        customer_id: customer.id,
-        total: orderFound.totalEntity(),
-        items: [{
-            id: orderItem.id,
-            name: orderItem.name,
-            price: orderItem.price,
-            quantity: orderItem.quantity,
-            order_id: order.id,
-            product_id: product.id
-        }]
+      id: orderFound.id,
+      customer_id: customer.id,
+      total: orderFound.totalEntity(),
+      items: [{
+        id: orderItem.id,
+        name: orderItem.name,
+        price: orderItem.price,
+        quantity: orderItem.quantity,
+        order_id: order.id,
+        product_id: product.id
+      }]
     });
   })
 
 
   it("should throw an error when trying to find an order by id that does not exist", async () => {
-      const orderRepository = new OrderRepository();
-      await expect(orderRepository.find("1")).rejects.toThrowError("Order not found");
+    const orderRepository = new OrderRepository();
+    await expect(orderRepository.find("1")).rejects.toThrowError("Order not found");
   })
 
   it("should find all orders", async () => {
