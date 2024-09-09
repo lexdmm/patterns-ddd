@@ -13,7 +13,7 @@ export default class EventDispatcher implements EventDispatcherInterface {
     if (!this.eventHandlers[eventName]) {
       this.eventHandlers[eventName] = [];
     }
-    this.eventHandlers[eventName].push(eventHandler);
+    this.eventHandlers[eventName].push(eventHandler); //guarda os eventos
   }
 
   unregister(eventName: string, eventHandler: EventHandlerInterface): void {

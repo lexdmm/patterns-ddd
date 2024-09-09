@@ -16,6 +16,8 @@
   - 3° Exemplo
 
 - Repositories
+- Domain Events
+  - Componentes
 
 
 ## Lidando com as Entidades
@@ -198,3 +200,46 @@ describe("...", () => {
 
 })
 ```
+
+## Domain Events
+
+É usado para capturar um evento que aconteceu no nosso domínio.
+
+Getters e Setters representam uma mudança de atributo e não de domínio. O evento que determina a mudança de estado do domínio. 
+
+Um evento é o que representa uma mudança de estado no domínio. Estes objetos são processados e provocam as alterações no sistema e geram AuditLog. (Fowler, Martin. Domain Event)
+
+- Todo evento deve ser representado em uma ação realizada no passado.
+  - UserCreated
+  - OrderPlaced
+  - EmailSent
+  - ProductCreated
+
+- Quando utilizar Domain Events?
+  - Quando queremos notificar outros bounded contexts sobre mudanças de estado;
+  *Bounded Context*: delimita um modelo de domínio e suas aplicações
+
+### Componentes
+
+- Event: É o proprio evento que representa uma mudança, podemos guardar a hora e a data da mudança.
+- Handler: Executa o processamento (uma ação) quando o evento ocorre.
+- Event Dispatcher: Armazena e executa os Handlers de um evento quando ele é disparado.
+
+A order é: 
+ 1 - Cria o event dispatcher
+ 2 - Cria o Evento
+ 3 - Cria o Handler para o Evento
+ 4 - REgistra o Evento junto com o Handler no Event Dispatcher
+
+ Para disparar o Evento, basta executar o método "notfy" do "Event Dispatcher", assim todos os handlers do evento serão executados.
+
+**Exemplos:**
+Observe a pasta *src/domain/@shared/event*.
+Lá, existe a interface *EventDispatcherInterface*, ela possui todos os métodos definidos para os tipos de eventos que desejamos disparar eventos de registro e notificação.
+
+**SendEmailWhenProductIsCreatedHandler** É a classe  que mostra o que acontece quando o evento é chamado. É o handler do produto no exemplo.
+
+**ProductCreatedEvent** é a classe que mostra o que acontece quando um produto é criado, na mudança do estado do domínio.
+
+
+**EventDispatcher**: Ela possui o método que vai registrar quando o evento ocorre.
