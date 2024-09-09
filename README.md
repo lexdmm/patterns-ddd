@@ -18,6 +18,7 @@
 - Repositories
 - Domain Events
   - Componentes
+  - Exemplos
 
 
 ## Lidando com as Entidades
