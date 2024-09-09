@@ -248,4 +248,6 @@ Lá, existe a interface *EventDispatcherInterface*, ela possui todos os métodos
 Servem como containers nomeados para as classes de objetos. Deve ter baixo acoplamento entre as classes onde cada um deve ser nomeado adequadamente pois no DDD eles são anemicos ou genéricos.
 
 - deve respeitar a linguágem universal, ubíqua;
-- 
+- baixo acoplamento;
+- um ou mais agregados podem estar juntos se fizer sentido;
+- organizado pelo domínio e subdomínio, não pelo tipo de objetos;
