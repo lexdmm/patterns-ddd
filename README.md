@@ -251,3 +251,4 @@ Servem como containers nomeados para as classes de objetos. Deve ter baixo acopl
 - baixo acoplamento;
 - um ou mais agregados podem estar juntos se fizer sentido;
 - organizado pelo domínio e subdomínio, não pelo tipo de objetos;
+- deve respeitar a mesma divisão de quando estão em camadas diferentes;
