@@ -233,13 +233,12 @@ A order é:
 
  Para disparar o Evento, basta executar o método "notfy" do "Event Dispatcher", assim todos os handlers do evento serão executados.
 
-**Exemplos:**
+### Exemplos:
 Observe a pasta *src/domain/@shared/event*.
 Lá, existe a interface *EventDispatcherInterface*, ela possui todos os métodos definidos para os tipos de eventos que desejamos disparar eventos de registro e notificação.
 
 **SendEmailWhenProductIsCreatedHandler** É a classe  que mostra o que acontece quando o evento é chamado. É o handler do produto no exemplo.
 
 **ProductCreatedEvent** é a classe que mostra o que acontece quando um produto é criado, na mudança do estado do domínio.
-
 
 **EventDispatcher**: Ela possui o método que vai registrar quando o evento ocorre.
