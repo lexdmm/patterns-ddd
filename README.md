@@ -14,11 +14,11 @@
   - 1° Exemplo
   - 2° Exemplo
   - 3° Exemplo
-
 - Repositories
 - Domain Events
   - Componentes
   - Exemplos
+- Modulos
 
 
 ## Lidando com as Entidades
@@ -243,3 +243,9 @@ Lá, existe a interface *EventDispatcherInterface*, ela possui todos os métodos
 **ProductCreatedEvent** é a classe que mostra o que acontece quando um produto é criado, na mudança do estado do domínio.
 
 **EventDispatcher**: Ela possui o método que vai registrar quando o evento ocorre.
+
+## Módulos
+Servem como containers nomeados para as classes de objetos. Deve ter baixo acoplamento entre as classes onde cada um deve ser nomeado adequadamente pois no DDD eles são anemicos ou genéricos.
+
+- deve respeitar a linguágem universal, ubíqua;
+- 
