@@ -1,7 +1,7 @@
 import EventHandlerInterface from '../../../@shared/event/event-handler.interface';
 import EventCreated from '../customer-created.event';
 
-export default class NotifyWhenCustomerIsCreatedHandler 
+export default class NotifyWhenCustomerAddressChangedHandler 
   implements EventHandlerInterface<EventCreated>
 {
   handle(event: EventCreated): void {

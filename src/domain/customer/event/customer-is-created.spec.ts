@@ -1,14 +1,14 @@
 import { Sequelize } from "sequelize-typescript";
-import EventDispatcher from '../../../@shared/event/event-dispatcher';
-import Customer from '../../entity/customer';
-import CustomerModel from '../../repository/sequelize/customer.model';
-import Address from '../../value-object/address';
-import CustomerCreatedEvent from '../customer-created.event';
-import NotifyWhenCustomerIsCreated1Handler from './notify-when-customer-is-created-1.handler';
-import NotifyWhenCustomerIsCreated2Handler from './notify-when-customer-is-created-2.handler';
-import CustomerRepository from '../../repository/sequelize/customer.repository';
-import NotifyWhenCustomerIsCreatedHandler from './notify-when-customer-is-created.handler';
-import CustomerCreatedChangeAddressEvent from '../customer-created-change-address.event';
+import EventDispatcher from '../../@shared/event/event-dispatcher';
+import Customer from '../entity/customer';
+import CustomerModel from '../repository/sequelize/customer.model';
+import Address from '../value-object/address';
+import CustomerCreatedEvent from './customer-created.event';
+import NotifyWhenCustomerIsCreated1Handler from './handler/notify-when-customer-is-created-1.handler';
+import NotifyWhenCustomerIsCreated2Handler from './handler/notify-when-customer-is-created-2.handler';
+import CustomerRepository from '../repository/sequelize/customer.repository';
+import NotifyWhenCustomerAddressChangedHandler from './handler/notify-when-customer-address-changed.handler';
+import CustomerCreatedChangeAddressEvent from './customer-created-change-address.event';
 
 describe("Domain events tests", () => {
   let sequelize: Sequelize;
@@ -89,7 +89,7 @@ describe("Domain events tests", () => {
     eventDispatcher.register("CustomerCreatedEvent", eventMessageHandler1);
     expect(eventDispatcher.getEventHandlers["CustomerCreatedEvent"][0]).toMatchObject(eventMessageHandler1);
 
-    const eventMessageHandlerChangeAddress = new NotifyWhenCustomerIsCreatedHandler();
+    const eventMessageHandlerChangeAddress = new NotifyWhenCustomerAddressChangedHandler();
     const spyEventChangeAddressHandler = jest.spyOn(eventMessageHandlerChangeAddress, "handle");
     eventDispatcher.register("CustomerCreatedChangeAddressEvent", eventMessageHandlerChangeAddress);
     expect(eventDispatcher.getEventHandlers["CustomerCreatedChangeAddressEvent"][0]).toMatchObject(eventMessageHandlerChangeAddress);
