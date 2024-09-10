@@ -295,7 +295,7 @@ Vamos supor que quero criar uma quantidade de produtos, mas para o client não i
 
 Para isso foi criada uma interface, porque não devemos depender de implementações completas, mas de interfaces. Para isso foi criado a interface *ProductInterface* em *src/domain/product/entity*.
 
-para o exemplo foi criado o *product-b.ts* a diferença dele para o product é o método price que foi alterado para multiplicar por 2:
+Para o exemplo foi criado o *product-b.ts* a diferença dele para o *product.ts* é o método price que foi alterado para multiplicar por 2:
 ```
 get price(): number {
   return this._price * 2;
@@ -303,6 +303,6 @@ get price(): number {
 ```
 
 Como não quero me preocupar sobre qual produto está sendo criado (A ou B) então cria o factory *product.factory.ts*.
-Nele não é difícil perceber que se eu escolhar o produto A, executa a classe para criar o produto com preço normal e se eu escolher o produto B, vai criar um produto com o preco multiplicado por 2. Mas essa validação que faz é a factory.
+Nele não é difícil perceber que se eu escolhar o produto A, executa a classe para criar o produto com preço normal e se eu escolher o produto B, vai criar um produto com o preco multiplicado por 2. Mas essa validação que faz é a factory utilizando o método **create** e extendendo a interface **ProductInterface** que encapsula essa criação. 
 
-Para validar o exemplo basta rodar o teste unitário *product.factory.spec.ts*.
+Para validar o exemplo basta rodar o teste unitário *product.factory.spec.ts*. 
