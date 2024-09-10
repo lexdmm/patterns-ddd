@@ -302,7 +302,7 @@ get price(): number {
 }
 ```
 
-Como não quero me preocupar sobre qual produto está sendo criado (A ou B) então cria o factory *product.factory.ts*.
+Como não quero me preocupar sobre qual produto está sendo criado (A ou B) então criamos o factory *product.factory.ts* que é responsável pela criação do produto.
 Nele não é difícil perceber que se eu escolhar o produto A, executa a classe para criar o produto com preço normal e se eu escolher o produto B, vai criar um produto com o preco multiplicado por 2. Mas essa validação que faz é a factory utilizando o método **create** e extendendo a interface **ProductInterface** que encapsula essa criação. 
 
 Para validar o exemplo basta rodar o teste unitário *product.factory.spec.ts*. 
