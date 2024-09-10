@@ -19,6 +19,9 @@
   - [Exemplos](#hook16)
 - [Modulos](#hook17)
   - [Modularizando a camada de domínio](#hook18)
+- [Factories](#hook19)
+  - [Exemplos](#hook20)
+
 
 <a id="hook1"></a>
 ## Lidando com as Entidades
@@ -275,3 +278,31 @@ Fazer com que haja uma linguágem ubiqua gritando aqui. Separando domínio ou ca
 - módulo de order
 - módulo de product
 - módulo de customer
+- módulo de repository
+
+<a id="hook19"></a>
+## Factories
+Desloque a responsabilidade de criar instancias de objetos complexos e *AGREGADOS* para um objeto separado que talvez não tenha responsabilidade no modelo de domínio, mas faz parte do design de domínio. 
+Fornecer uma interface para encapsular toda a criação complexa e que nao exija que o cliente faça referencia as classes concretas dos objetos complexos que estão sendo instanciados. Com *aggregates inteiros* de uma única vez, evitando variantes. (Evans, Eric. Domain-Driven Design - p. 138 - 2011)
+
+Em resumo cria um objeto encapsulado. É importante não ferir o princípio de liskov do solid. Onde um classe filha pode ser totalmente substituída pela classe pai.
+
+<a id="hook20"></a>
+### Exemplos
+
+Vamos supor que quero criar uma quantidade de produtos, mas para o client não importa saber qual classe vai implementar, então definimos um factory para o produto.
+- src/domain/product/factory/product.factory.ts
+
+Para isso foi criada uma interface, porque não devemos depender de implementações completas, mas de interfaces. Para isso foi criado a interface *ProductInterface* em *src/domain/product/entity*.
+
+para o exemplo foi criado o *product-b.ts* a diferença dele para o product é o método price que foi alterado para multiplicar por 2:
+```
+get price(): number {
+  return this._price * 2;
+}
+```
+
+Como não quero me preocupar sobre qual produto está sendo criado (A ou B) então cria o factory *product.factory.ts*.
+Nele não é difícil perceber que se eu escolhar o produto A, executa a classe para criar o produto com preço normal e se eu escolher o produto B, vai criar um produto com o preco multiplicado por 2. Mas essa validação que faz é a factory.
+
+Para validar o exemplo basta rodar o teste unitário *product.factory.spec.ts*.
