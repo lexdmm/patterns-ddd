@@ -1,28 +1,29 @@
 # DDD - Modelagem tática e Patterns
 
 ## Tópicos
-- Lidando com as Entidades
-  - Tudo que trata um comportamento de uma entidade é uma regra de negócio
-  - O mínimo que esperamos da entidade é que seus dados estejam consistentes
-  - Uma entidade deve se auto-validar.
+- [Lidando com as Entidades](#hook1)
+  - [Tudo que trata um comportamento de uma entidade é uma regra de negócio](#hook2)
+  - [O mínimo que esperamos da entidade é que seus dadosestejam consistentes](#hook3)
+  - [Uma entidade deve se auto-validar](#hook4)
+- [ORM - Model vs Entidade](#hook5)
+- [Value Objects](#hook6)
+- [Aggregate](#hook7)
+- [Domain Services](#hook8)
+  - [Agregados - cuidados](#hook9)
+  - [1° Exemplo](#hook10)
+  - [2° Exemplo](#hook11)
+  - [3° Exemplo](#hook12)
+- [Repositories](#hook13)
+- [Domain Events](#hook14)
+  - [Componentes](#hook15)
+  - [Exemplos](#hook16)
+- [Modulos](#hook17)
+  - [Modularizando a camada de domínio](#hook18)
 
-- ORM - Model vs Entidade
-- Value Objects
-- Aggregate
-- Domain Services
-  - Agregados - cuidados
-  - 1° Exemplo
-  - 2° Exemplo
-  - 3° Exemplo
-- Repositories
-- Domain Events
-  - Componentes
-  - Exemplos
-- Modulos
-
-
+<a id="hook1"></a>
 ## Lidando com as Entidades
 
+<a id="hook2"></a>
 ### Tudo que trata um comportamento de uma entidade é uma regra de negócio
 
 Uma entidade é anêmica, ela não muda comportamentos, só reflete os atributos de uma base de dados. 
@@ -39,19 +40,23 @@ changeName(name: string) {
 
 Com o exemplo, foi alterado o comportamento mas o estado atual da entidade nunca foi alterado, ela representa e reflete seus atributos atuais. 
 
+<a id="hook3"></a>
 ### O mínimo que esperamos da entidade é que seus dados estejam consistentes
 Se eu apresentar um campo **address** na minha entidade, ele deve refletir em todo meu sistema. 
 
+<a id="hook4"></a>
 ### Uma entidade deve se auto-validar. 
 Por exemplo, o campo **name**
 da tabela customer possui uma função **validate()** para verificar se o nome está vaziu ou não. 
 
 Por isso cuidado com os setters em uma entidade. Eles devem sempre ser validados para a entidade não ficar invalida.
 
+<a id="hook5"></a>
 ## ORM - Model vs Entidade
 Quando usamos um ORM nossa entidade vira um ***model***, não é focada em negócio, ela é focada em persistência. A entidade trata do negócio o model da persistência. São arquivos com coisas iguais mas contextos diferentes. 
 Um atende o negócio o outro guarda dados e reflete eles para o "*mundo externo*".
 
+<a id="hook6"></a>
 ## Value Objects
 Os atributos de valor de um elemento devem ser classificados como um Value Object imutável, mas que pode ser trocado, não sofre necessáriamente uma alteração (Eric Evans). Trata-se de modelar os dadps de forma mais expressiva tornando mais estável porque evitamos trabalhar com tipos primitivos para tudo.
 
@@ -90,6 +95,7 @@ export default class Customer {
 }
 ```
 
+<a id="hook7"></a>
 ## Aggregate
 É um conjunto de objetos associados que tratamos como uma unidade para propósito de mudança de negócio.
 
@@ -120,6 +126,7 @@ Isso significa que os meus **roots** com seus objetos de valor são **Customer**
 Assim fica demonstrado que se a relação for **dentro da mesmo agregado** então a realação será pelo mesmo objeto ou classe. 
 E a **relação for de agregados diferentes**, você vai ter que definir um **id** para a relação.
 
+<a id="hook8"></a>
 ## Domain Services
 Um serviço de domínio é uma operação sem estado que cumpre uma tarefa desse domínio. 
 
@@ -129,6 +136,7 @@ Quando um processo ou transformação significa no domínio precisa de uma opera
 
 Defina a interface com base na linguagem desse modelo de domínio e garanta que o nome da operação faça parte da **linguágem ubiqua** e torne o serviço sem estado.
 
+<a id="hook9"></a>
 ### Agregados - cuidados
 - Quando a gente começa a trabalhar com Domínio a podemos acabar criando serviços anêmicos e isolados deixando tudo no *serviço de domíno* ao inves de deixar na *entidade*, o que não é legal. 
 
@@ -136,18 +144,21 @@ Defina a interface com base na linguagem desse modelo de domínio e garanta que 
 
 - Ter o bom senso e não ser tão puritano, entenda que se você precisar criar um método no serviço de domínio para alterar uma massa de dados, não é coerente carregar uma lista em memória para alterar esses dados um a um.
 
+<a id="hook10"></a>
 ### 1° Exemplo
 Imagine que queremos aumentar o valor de um preço de um produto na classe ***Product*** do projeto. Lá ja existe um metodo que altera o preço chamado **changePrice()**. Mas e se desejarmos que esse preço também seja alterado em outras entidades?
 
 Para fazer isso, o ideal é criar um *servico de domínio* chamado **product.service.ts** e ele não guarda estado nenhum apenas executar uma operação no meu produto. 
 Considere aqui o puritnismo que citado acima, pois uma massa de dados está sendo alterada. Vale a pena fazer um service e rodar um único update no banco. 
 
+<a id="hook11"></a>
 ### 2° Exemplo
 Como pegar o total de ordens que estão sendo geradas? 
 Dentro da classe **Order** existe o **totalEntity()** que calcula o valor total, mas apenas de uma Order. Para isso também foi criado um *servico de domínio* chamado **order.service.ts**. Nele temos o metodo **totalOperation()** que calcula o valor total de uma ordem.
 
 Então temos 2 métodos que diferentes. O total da Order que vem da entidade e outro que trata de um dos comportamentos dela atraves da uma operação do *servico de domínio*.
 
+<a id="hook12"></a>
 ### 3° Exemplo
 Este exemplo vai demonstrar como utilizar **domain service** para trabalhar com agregados diferentes. Imagine que na Order, quando um cliente contratar um serviço ele ganhe *rewards* sobre essa ordem. 
 Basicamente depende tanto da agregação de **Order** quando de **Customer**.
@@ -170,6 +181,7 @@ it("should place an order and add reward points", () => {
 ```
 Assim fica possível o agregado da ordem (Order) inferir nas re a regra de negocio dos reward points de cliente (Customer).
 
+<a id="hook13"></a>
 ## Repositories
 Se refere a um local de armazenamento para segurança e presenvação dos items para recupera-los posteriormente. E se espera que eles se encontrem no mesmo estado que estavam quando foram inseridos lá. Com a opção de poder remover ou não os items do repositório.
 
@@ -201,7 +213,7 @@ describe("...", () => {
 
 })
 ```
-
+<a id="hook14"></a>
 ## Domain Events
 
 É usado para capturar um evento que aconteceu no nosso domínio.
@@ -220,6 +232,7 @@ Um evento é o que representa uma mudança de estado no domínio. Estes objetos 
   - Quando queremos notificar outros bounded contexts sobre mudanças de estado;
   *Bounded Context*: delimita um modelo de domínio e suas aplicações
 
+<a id="hook15"></a>
 ### Componentes
 
 - Event: É o proprio evento que representa uma mudança, podemos guardar a hora e a data da mudança.
@@ -234,6 +247,7 @@ A order é:
 
  Para disparar o Evento, basta executar o método "notfy" do "Event Dispatcher", assim todos os handlers do evento serão executados.
 
+<a id="hook16"></a>
 ### Exemplos:
 Observe a pasta *src/domain/@shared/event*.
 Lá, existe a interface *EventDispatcherInterface*, ela possui todos os métodos definidos para os tipos de eventos que desejamos disparar eventos de registro e notificação.
@@ -244,6 +258,7 @@ Lá, existe a interface *EventDispatcherInterface*, ela possui todos os métodos
 
 **EventDispatcher**: Ela possui o método que vai registrar quando o evento ocorre.
 
+<a id="hook17"></a>
 ## Módulos
 Servem como containers nomeados para as classes de objetos. Deve ter baixo acoplamento entre as classes onde cada um deve ser nomeado adequadamente pois no DDD eles são anemicos ou genéricos.
 
@@ -252,3 +267,11 @@ Servem como containers nomeados para as classes de objetos. Deve ter baixo acopl
 - um ou mais agregados podem estar juntos se fizer sentido;
 - organizado pelo domínio e subdomínio, não pelo tipo de objetos;
 - deve respeitar a mesma divisão de quando estão em camadas diferentes;
+
+<a id="hook18"></a>
+### Modularizando a camada de domínio
+Fazer com que haja uma linguágem ubiqua gritando aqui. Separando domínio ou camada. Aqui cada módulo possui seu próprio repositório, factories e eventos. 
+
+- módulo de order
+- módulo de product
+- módulo de customer

@@ -1,5 +1,5 @@
-import Customer from "../../entity/customer";
-import Address from "../../value-object/address";
+import Customer from "../../../customer/entity/customer";
+import Address from "../../../customer/value-object/address";
 import CustomerRepositoryInterface from "../customer-repository.interface";
 import CustomerModel from "./customer.model";
 

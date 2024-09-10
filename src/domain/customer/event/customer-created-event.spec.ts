@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize-typescript";
 import EventDispatcher from '../../@shared/event/event-dispatcher';
 import Customer from '../entity/customer';
-import CustomerModel from '../repository/sequelize/customer.model';
+import CustomerModel from '../../repository/customer/sequelize/customer.model';
 import Address from '../value-object/address';
 import CustomerCreatedEvent from './customer-created.event';
 import NotifyWhenCustomerIsCreated1Handler from './handler/notify-when-customer-is-created-1.handler';
 import NotifyWhenCustomerIsCreated2Handler from './handler/notify-when-customer-is-created-2.handler';
-import CustomerRepository from '../repository/sequelize/customer.repository';
+import CustomerRepository from '../../repository/customer/sequelize/customer.repository';
 import NotifyWhenCustomerAddressChangedHandler from './handler/notify-when-customer-address-changed.handler';
 import CustomerCreatedChangeAddressEvent from './customer-created-change-address.event';
 
